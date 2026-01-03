@@ -1,0 +1,26 @@
+export function extractFeatures(events) {
+    const downs = []
+    const ups = []
+
+    events.forEach(e => {
+        if (e.type === "down") downs.push(e)
+        else ups.push(e)
+    })
+
+    const hold = []
+    const pp = []
+    const rp = []
+
+    for (let i = 0; i < downs.length; i++) {
+        const up = ups.find(u => u.key === downs[i].key && u.time >= downs[i].time)
+        if (up) hold.push(up.time - downs[i].time)
+    }
+
+    for (let i = 0; i < downs.length - 1; i++) {
+        pp.push(downs[i + 1].time - downs[i].time)
+        const up = ups.find(u => u.key === downs[i].key)
+        if (up) rp.push(downs[i + 1].time - up.time)
+    }
+
+    return [...hold, ...pp, ...rp]
+}
