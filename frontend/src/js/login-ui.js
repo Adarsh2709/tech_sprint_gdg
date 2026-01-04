@@ -63,7 +63,7 @@ if (passwordInput) {
 if (loginButton) {
   loginButton.addEventListener("click", () => {
     setPill("warn")
-    setStatusText("Verifying… If OTP is required, you will be redirected.")
+    setStatusText("Verifying…")
   })
 }
 
